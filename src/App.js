@@ -19,13 +19,7 @@ function App() {
           'Amount' : [270, 239, 617, 384, 626, 610, 62, 90]
         })
 
-        def returnList():
-          list = df.values.tolist()
-          print(list)
-          jsList = json.dumps(list)
-          return jsList
-        
-        returnList()
+        print(df)
       `)
       setList(temp)
       console.log('list: ', temp)
@@ -33,12 +27,7 @@ function App() {
   }
 
   function createPivotTable() {
-    const pivotList = pyodide.current.runPython(`
-
-      import pandas as pd
-
-      df = pd.DataFrame(${list})
-      df.columns = ['Product','Category','Quantity','Amount']
+    const pivotList = pyodide.current.runPython(`  
 
       pivot = df.pivot_table(index =['Product'], values =['Amount'], aggfunc ='sum')
       
@@ -53,16 +42,6 @@ function App() {
     `)
     console.log('pivotList: ', pivotList)
   }
-
-  // def returnPivot():
-        
-  //       list = pivot.values.tolist()
-  //       jsList = json.dumps(list)
-  //       return jsList
-      
-  //     returnPivot()
-  
-  //     print(jsList)
 
   useEffect(async () => {
     if(!pyodideInitialized) {
