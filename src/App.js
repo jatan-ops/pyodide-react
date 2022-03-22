@@ -8,6 +8,7 @@ function App() {
   const [pyodideInitialized, setPyodideInitialized] = useState(false)
 
   function loadLibrary() {
+    //separated this as import takes a while to execute
       pyodide.current.runPython(`
         import pandas as pd
         import json
@@ -34,10 +35,10 @@ function App() {
 
       pivot = df.pivot_table(index =['Product'], values =['Amount'], aggfunc ='sum')
       
-      newPivot=pivot.reset_index()
+      newPivot=pivot.reset_index() # convert pivot to daraframe
       print(newPivot)
-      list = newPivot.values.tolist()
-      jsList = json.dumps(list)
+      list = newPivot.values.tolist() # convert dataframe to list in Python
+      jsList = json.dumps(list) # convert Python list to JS list
       
       def returnPivot():
         return jsList
